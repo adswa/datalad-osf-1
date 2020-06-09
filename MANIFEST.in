@@ -1,0 +1,2 @@
+include versioneer.py
+include datalad_osf/_version.py

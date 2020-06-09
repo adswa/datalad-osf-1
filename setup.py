@@ -1,29 +1,23 @@
-import os
-from setuptools import setup, find_packages
-PACKAGES = find_packages()
+#!/usr/bin/env python
+import sys
+from setuptools import setup
+import versioneer
 
-# Get version and release info, which is all stored in datalad_osf/version.py
-ver_file = os.path.join('datalad_osf', 'version.py')
-with open(ver_file) as f:
-    exec(f.read())
-
-opts = dict(name=NAME,
-            maintainer=MAINTAINER,
-            maintainer_email=MAINTAINER_EMAIL,
-            description=DESCRIPTION,
-            long_description=LONG_DESCRIPTION,
-            url=URL,
-            download_url=DOWNLOAD_URL,
-            license=LICENSE,
-            classifiers=CLASSIFIERS,
-            author=AUTHOR,
-            author_email=AUTHOR_EMAIL,
-            platforms=PLATFORMS,
-            version=VERSION,
-            packages=PACKAGES,
-            install_requires=REQUIRES,
-            requires=REQUIRES)
-
+# Give setuptools a hint to complain if it's too old a version
+# 30.3.0 allows us to put most metadata in setup.cfg
+# Should match pyproject.toml
+SETUP_REQUIRES = ['setuptools >= 30.3.0']
+# This enables setuptools to install wheel on-the-fly
+SETUP_REQUIRES += ['wheel'] if 'bdist_wheel' in sys.argv else []
 
 if __name__ == '__main__':
-    setup(**opts)
+    setup(name='datalad_osf',
+          version=versioneer.get_version(),
+          cmdclass=versioneer.get_cmdclass(),
+          setup_requires=SETUP_REQUIRES,
+          entry_points = {
+              'datalad.extensions': [
+                  'osf=datalad_osf:command_suite',
+              ],
+          },
+    )

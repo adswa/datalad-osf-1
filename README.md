@@ -1,7 +1,9 @@
 # datalad-osf
-Utility scripts to facilitate use of Datalad with OSF
+A DataLad extension to facilitate the use of Datalad with OSF
 
 ## Usage
+
+TODO
 
 To download an OSF project into the current datalad dataset, use the provided `update_recursive` function. `update_recursive` accepts two parameters: the OSF project key (obtainable from the project URL) and an optional `subset` parameter, which allows downloading a subset of the OSF project.
 
